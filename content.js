@@ -1,49 +1,65 @@
-// Listen for scrape request from the popup script
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === 'SCRAPE') {
-    // Find the table with the specified ID
-    const table = document.getElementById(message.tableId);
-    if (!table) {
-      console.error(`Table with ID ${message.tableId} not found.`);
-      chrome.runtime.sendMessage({ type: 'TABLE_NOT_FOUND', id: message.tableId });
-      return;
+// Converts JSON array to CSV
+function jsonToCSV(json) {
+  const escapeCSV = (str) => {
+    // Covers cases where table cells have commas or double quotes
+    if (str.includes(',') || str.includes('"')) {
+      return `"${str.replace(/"/g, '""')}"`; 
     }
+    return str;
+  };
 
-    // Array to hold extracted data
-    const data = [];
-    let headers = [];
+  const rows = json.map(row => 
+    Object.values(row).map(escapeCSV).join(',')
+  );
+  const header = Object.keys(json[0]).map(escapeCSV).join(',');
 
-    // Extracting table headers
-    table.querySelectorAll(':scope > thead > tr').forEach(row => {
-      const rowHeaders = Array.from(row.querySelectorAll('th'))
-        .map(header => header.textContent.replace(/[\r\n]+/g, ' ').replace(/\s\s+/g, ' ').trim());
+  return [header, ...rows].join('\r\n');
+}
+
+// Listens for popup script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const table = document.getElementById(message.tableId);
+  if (!table) {
+    chrome.runtime.sendMessage({ type: 'TABLE_NOT_FOUND', id: message.tableId });
+    return;
+  }
+
+  const data = [];
+  let headers = [];
+  const omitIndices = message.omitColumns.split(',').map(Number).map(x => x - 1);
+  const omitRowIndices = new Set(message.omitRows.split(',').map(Number).map(x => x - 1));
+
+  // The use of :scope avoids selecting nested table headers
+  table.querySelectorAll(':scope > thead > tr').forEach(row => {
+    const rowHeaders = Array.from(row.querySelectorAll('th'))
+      .map(header => header.textContent.replace(/[\r\n]+/g, ' ').replace(/\s\s+/g, ' ').trim());
       if (rowHeaders.length > headers.length) {
         headers = rowHeaders;
       }
-    });
+  });
 
-    // Extracting table data
-    table.querySelectorAll(':scope > tbody > tr').forEach(row => {
+  // The use of :scope avoids selecting nested tables
+  table.querySelectorAll(':scope > tbody > tr').forEach((row, rowIndex) => {
+    if (!omitRowIndices.has(rowIndex)) {
       const rowData = {};
       Array.from(row.querySelectorAll('td, th')).forEach((cell, cellIndex) => {
-        if (cellIndex < headers.length) {
+        if (!omitIndices.includes(cellIndex) && cellIndex < headers.length) {
           rowData[headers[cellIndex]] = cell.textContent.replace(/[\r\n]+/g, ' ').replace(/\s\s+/g, ' ').trim();
         }
       });
       if (Object.keys(rowData).length > 0) {
         data.push(rowData);
       }
-    });
+    }
+  });
 
-    // Define the file name for the downloaded data.
-    const filename = message.fileName ? `${message.fileName}.json` : 'table_data.json';
-    // Create a blob for the JSON data and initiate a download.
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.href = url;
-    downloadAnchorNode.download = filename;
-    downloadAnchorNode.click();  // Trigger the download
-    downloadAnchorNode.remove();  // Clean up the DOM
-  }
+  const filename = message.fileName + (message.fileFormat === 'csv' ? '.csv' : '.json');
+  const fileContent = message.fileFormat === 'csv' ? jsonToCSV(data) : JSON.stringify(data, null, 2);
+  const blob = new Blob([fileContent], { type: 'text/' + (message.fileFormat === 'csv' ? 'csv' : 'json') });
+  const url = URL.createObjectURL(blob);
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.href = url;
+  downloadAnchorNode.download = filename;
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
 });

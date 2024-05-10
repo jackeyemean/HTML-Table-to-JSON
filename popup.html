@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Table Scraper</title>
-  </head>
-  <body>
-    <div>
-      <label for="fileName">File Name:</label>
-      <input type="text" id="fileName" placeholder="Default: Table-Data">
-      <br>
-      <br>
-      <label for="tableId">Table ID:</label>
-      <input type="text" id="tableId" placeholder="HTML ID">
-      <br>
-      <br>
-      <button id="scrape">Scrape Table</button>
-    </div>
-    <script src="popup.js"></script>
-  </body>
+<head>
+  <title>Table Scraper</title>
+</head>
+<body>
+  <div>
+    <label for="fileName">File Name:</label>
+    <input type="text" id="fileName" placeholder="Default: Table-Data">
+    <br><br>
+    <label for="tableId">Table ID:</label>
+    <input type="text" id="tableId" placeholder="HTML ID">
+    <br><br>
+    <label for="omitColumns">Columns to Omit:</label>
+    <input type="text" id="omitColumns" placeholder="e.g., 1,3,8">
+    <br><br>
+    <label for="omitRows">Rows to Omit:</label>
+    <input type="text" id="omitRows" placeholder="e.g., 2,5,7">
+    <br><br>
+    <label for="fileFormat">File Format:</label>
+    <select id="fileFormat">
+      <option value="json">JSON</option>
+      <option value="csv">CSV</option>
+    </select>
+    <br><br>
+    <button id="scrape">Scrape Table</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
 </html>

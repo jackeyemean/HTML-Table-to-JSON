@@ -1,32 +1,30 @@
-// Click event listener for scrape button
+// Listens for scrape button to be clicked
 document.getElementById('scrape').addEventListener('click', () => {
-    // Retrieve the user-entered table ID and file name
-    const tableId = document.getElementById('tableId').value;
-    const fileName = document.getElementById('fileName').value || 'Table-Data';
-  
-    // Check if the table ID is provided
-    if (tableId) {
-      // Query the active tab in the current window
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        // Inject the content script into the active tab
-        chrome.scripting.executeScript({
-          target: {tabId: tabs[0].id},
-          files: ['content.js']
-        }, () => {
-          // Send a message to the content script with the table ID and file name
-          chrome.tabs.sendMessage(tabs[0].id, { type: "SCRAPE", tableId: tableId, fileName: fileName });
+  // Retrieving values from user input fields
+  const tableId = document.getElementById('tableId').value;
+  const fileName = document.getElementById('fileName').value || 'Table-Data';
+  const omitColumns = document.getElementById('omitColumns').value;
+  const omitRows = document.getElementById('omitRows').value;
+  const fileFormat = document.getElementById('fileFormat').value;
+
+  if (tableId) {
+    // Execute content.js script and sends user inputs
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.scripting.executeScript({
+        target: {tabId: tabs[0].id},
+        files: ['content.js']
+      }, () => {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: "SCRAPE",
+          tableId: tableId,
+          fileName: fileName,
+          omitColumns: omitColumns,
+          fileFormat: fileFormat,
+          omitRows: omitRows
         });
       });
-    } else {
-      alert('Please enter a table ID.');
-    }
-  });
-  
-  // Listens for invalid table message from content script
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === 'TABLE_NOT_FOUND') {
-      // Display an alert with the missing table ID
-      alert(`Table ID ${message.id} not found on the page.`);
-    }
-  });
-  
+    });
+  } else {
+    alert('Please enter a table ID.');
+  }
+});
