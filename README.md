@@ -1,8 +1,8 @@
 ## Overview
 This browser extension allows users to scrape HTML tables from web pages and download them as JSON or CSV files. This is a straightforward tool with a simple interface made for extracting and saving data in a structured format without manual copying.
 
-[Chrome Web Store](https://chrome.google.com/webstore/detail/your-extension-id)
-[Edge Add-ons](https://chrome.google.com/webstore/detail/your-extension-id)
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/your-extension-id)
+- [Edge Add-ons](https://chrome.google.com/webstore/detail/your-extension-id)
 
 ## Demo
 ![HTML Table to JSON File Demo](path_to_your_demo_gif.gif)
