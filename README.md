@@ -1,5 +1,3 @@
-# HTML Table to JSON or CSV File
-
 ## Overview
 This browser extension allows users to scrape HTML tables from web pages and download them as JSON or CSV files. This is a straightforward tool with a simple interface made for extracting and saving data in a structured format without manual copying.
 
