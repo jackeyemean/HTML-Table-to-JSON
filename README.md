@@ -4,12 +4,33 @@ This browser extension allows users to scrape HTML tables from web pages and dow
 ## Demo
 Click here to watch the scraper demo: [Youtube Link](https://www.youtube.com/watch?v=RdgM5jlZJ4E)
 
-## Usage
-To use the extension, follow these steps:
-1. Click on the extension icon in the toolbar to open the popup.
-2. Enter the HTML ID of the table you want to scrape (inspect element)
-3. (Optional) Name your file or specify any columns/rows you wish to omit.
-4. Choose to download as a JSON or a CSV
-5. Click the `Scrape Table` button.
+## Installation
+
+Since this extension is not available on the Chrome Web Store or Microsoft Edge Add-ons, you can install it manually by following these steps:
+
+### Chrome
+
+1. **Download the Extension**: 
+   - Navigate to the [Releases](https://github.com/yourusername/your-repo/releases) page of this repository.
+   - Download the latest release `.zip` file.
+
+2. **Unpack the Extension**:
+   - Extract the `.zip` file to a folder on your computer.
+
+3. **Load the Extension in Chrome**:
+   - Open Chrome and navigate to `chrome://extensions/`.
+   - Enable 'Developer mode' at the top-right corner.
+   - Click on 'Load unpacked' and select the folder where you extracted the extension.
+
+### Microsoft Edge
+
+1. **Download the Extension**:
+   - Follow the same steps as for Chrome to download and extract the extension.
+
+2. **Load the Extension in Edge**:
+   - Open Edge and navigate to `edge://extensions/`.
+   - Enable 'Developer mode' at the bottom-left.
+   - Click on 'Load unpacked' and select the folder where you extracted the extension.
+
 
 
