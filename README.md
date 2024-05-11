@@ -5,7 +5,7 @@ This browser extension allows users to scrape HTML tables from web pages and dow
 - [Edge Add-ons](https://chrome.google.com/webstore/detail/your-extension-id)
 
 ## Demo
-![HTML Table to JSON File Demo](path_to_your_demo_gif.gif)
+![Youtube Link](https://youtu.be/RdgM5jlZJ4E)
 
 ## Usage
 To use the extension, follow these steps:
