@@ -11,7 +11,7 @@ Since this extension is not available on the Chrome Web Store or Microsoft Edge 
 ### Chrome
 
 1. **Download the Extension**: 
-   - Navigate to the [Releases](https://github.com/jackeyemean/HTML-Table-to-JSON-CSV/releases/tag/v1.1.0) page of this repository.
+   - Navigate to the [Initial Release](https://github.com/jackeyemean/HTML-Table-to-JSON-CSV/releases/tag/v1.1.0) page of this repository.
    - Download the `.zip` file.
 
 2. **Unpack the Extension**:
