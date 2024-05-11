@@ -2,6 +2,9 @@
   "manifest_version": 3,
   "name": "HTML Table to JSON File",
   "version": "1.0",
+  "icons": {
+    "300": "extension-logo.png"
+  },
   "permissions": ["activeTab", "scripting", "storage"],
   "action": {
     "default_popup": "popup.html"
