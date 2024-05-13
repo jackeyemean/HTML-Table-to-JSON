@@ -1,5 +1,5 @@
 ## Overview
-This browser extension allows users to scrape HTML tables from web pages and download them as JSON or CSV files. This is a straightforward tool with a bare-bones interface made for extracting and saving data in a structured format without manual copying.
+This browser extension utilizes [Chrome Extension APIs](https://developer.chrome.com/docs/extensions/reference/api) to allow users to scrape HTML tables from web pages and download them as JSON or CSV files. This is a straightforward tool with a bare-bones interface made for extracting and saving data in a structured format without manual copying.
 
 ## Demo
 Click here to watch the scraper demo: [Youtube Link](https://www.youtube.com/watch?v=RdgM5jlZJ4E)
